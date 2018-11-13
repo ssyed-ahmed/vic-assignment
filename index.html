@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Code Challenge</title>
+	<script type="text/javascript">
+		var childArray = [];
+		var removedChildren = [];
+
+		function Child(id) {
+			
+			this.id = id;
+		}
+
+
+		function startGame(n, k, startPos) {
+			if (startPos > n - 1) {
+				console.log('Array position cannot be greater than the array length.');
+				return;
+			}
+			console.log('Start Position = ' + startPos);
+			console.log('Count = ' + k);
+			initializeChildArray(n);
+			findChildIndexWithGivenNumberAndStartPosition(k, startPos - 1);			
+		}
+
+		function initializeChildArray(arrayLength) {
+			for (let i = 0; i < arrayLength; i++) {
+				let child = new Child(i+1);
+				childArray.push(child);
+			}
+		}
+
+		function findChildIndexWithGivenNumberAndStartPosition(k, startPos) {
+			if (childArray.length === 1) {
+				console.log('Winner is');
+				console.log(removedChildren);
+				console.log(childArray[0]);
+				return;
+			}
+			let rem = (k + startPos) % childArray.length;
+			let index = rem === 0 ? childArray.length - 1: rem - 1;			
+			let child = childArray[index];
+			removedChildren.push(child);
+			childArray.splice(index, 1);
+			startPos += 1;
+			findChildIndexWithGivenNumberAndStartPosition(k, startPos);
+		}
+
+	</script>
+</head>
+<body onload="startGame(9, 17, 2)">
+	Array Code Challenge
+</body>
+</html>
